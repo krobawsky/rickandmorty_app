@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rickandmorty_app/domain/models/models.dart';
 import 'package:rickandmorty_app/ui/cubits/character/character_cubit.dart';
+import 'package:rickandmorty_app/ui/widgets/search_delegate.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -33,11 +34,20 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: const Text(
-              "Rick And Morty",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            centerTitle: true),
+          title: const Text(
+            "Rick And Morty",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  showSearch(
+                      context: context, delegate: SearchCharacter(cubit));
+                },
+                icon: const Icon(Icons.search))
+          ],
+        ),
         body: BlocBuilder<CharacterCubit, CharacterState>(
             buildWhen: (p, c) =>
                 (p.status != c.status || p.characters != c.characters),

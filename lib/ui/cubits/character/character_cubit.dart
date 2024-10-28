@@ -19,7 +19,7 @@ class CharacterCubit extends Cubit<CharacterState> {
       count: 0,
       characters: []));
 
-  void getCharacters({String search = ''}) async {
+  void getCharacters() async {
     if (state.status == CharacterStatus.loading ||
         (state.count == state.characters.length &&
             state.characters.isNotEmpty)) {
@@ -30,9 +30,7 @@ class CharacterCubit extends Cubit<CharacterState> {
       emit(state.copyWith(status: CharacterStatus.loading));
     }
 
-    final response = await _characterRepository.getCharacters(
-        page: state.page, search: search);
-
+    final response = await _characterRepository.getCharacters(page: state.page);
     response.fold(
         (l) => emit(state.copyWith(error: '', status: CharacterStatus.error)),
         (r) {
@@ -42,5 +40,10 @@ class CharacterCubit extends Cubit<CharacterState> {
           count: r.info?.count,
           status: CharacterStatus.success));
     });
+  }
+
+  Future<List<CharacterModel>> searhCharacter({String search = ''}) async {
+    final response = await _characterRepository.getCharacters(search: search);
+    return response.fold((l) => [], (r) => r.results);
   }
 }

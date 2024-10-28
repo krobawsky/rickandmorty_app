@@ -14,7 +14,7 @@ class CharacterRemote implements CharacterImplement {
   Future<Either<DataException, CharacterListEntityResponse>> getCharacters(
       {int page = 1, String search = ""}) async {
     try {
-      String route = "$url/character?page=$page&search=$search";
+      String route = "$url/character?page=$page&name=$search";
       final response = await http.get(Uri.parse(route));
       return Right(characterEntityResponseFromJson(response.body));
     } catch (e) {
