@@ -45,7 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   showSearch(
                       context: context, delegate: SearchCharacter(cubit));
                 },
-                icon: const Icon(Icons.search))
+                icon: const Icon(Icons.search)),
+            IconButton(
+                onPressed: () {
+                  context.go("/favorites");
+                },
+                icon: const Icon(Icons.star)),
           ],
         ),
         body: BlocBuilder<CharacterCubit, CharacterState>(

@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rickandmorty_app/domain/repositories/repositories.dart';
 import 'package:rickandmorty_app/ui/cubits/character/character_cubit.dart';
+import 'package:rickandmorty_app/ui/cubits/favorite/favorite_cubit.dart';
+import 'package:sqflite/sqflite.dart';
 
 import 'core/routes.dart';
 
-void main() {
+Future<void> main() async {
+  // Initialize FFI
   runApp(const MyApp());
 }
 
@@ -19,12 +22,19 @@ class MyApp extends StatelessWidget {
       providers: [
         RepositoryProvider<CharacterRepository>(
             create: (context) => CharacterRepository()),
+        RepositoryProvider<FavoriteRepository>(
+            create: (context) => FavoriteRepository()),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
             create: (context) => CharacterCubit(
               RepositoryProvider.of<CharacterRepository>(context),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => FavoriteCubit(
+              RepositoryProvider.of<FavoriteRepository>(context),
             ),
           ),
         ],
