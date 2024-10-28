@@ -19,14 +19,17 @@ class CharacterCubit extends Cubit<CharacterState> {
       count: 0,
       characters: []));
 
-  void getCountries({String search = ''}) async {
+  void getCharacters({String search = ''}) async {
     if (state.status == CharacterStatus.loading ||
         (state.count == state.characters.length &&
             state.characters.isNotEmpty)) {
       return;
     }
 
-    emit(state.copyWith(status: CharacterStatus.loading));
+    if (state.page == 1 && state.characters.isEmpty) {
+      emit(state.copyWith(status: CharacterStatus.loading));
+    }
+
     final response = await _characterRepository.getCharacters(
         page: state.page, search: search);
 
@@ -34,7 +37,7 @@ class CharacterCubit extends Cubit<CharacterState> {
         (l) => emit(state.copyWith(error: '', status: CharacterStatus.error)),
         (r) {
       emit(state.copyWith(
-          characters: r.results,
+          characters: [...state.characters, ...r.results],
           page: state.page + 1,
           count: r.info?.count,
           status: CharacterStatus.success));
