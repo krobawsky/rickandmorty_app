@@ -90,15 +90,18 @@ class CharacterList extends StatelessWidget {
           final character = characters[index];
           return GestureDetector(
             onTap: () {
-              context.go("/character");
+              context.go("/character", extra: character);
             },
             child: Card(
                 child: Column(
               children: [
-                FadeInImage(
-                    placeholder: const AssetImage("assets/images/portal.gif"),
-                    image: NetworkImage(character.image!)),
-                Text(character.name ?? "No Name",
+                Hero(
+                  tag: character.id,
+                  child: FadeInImage(
+                      placeholder: const AssetImage("assets/images/portal.gif"),
+                      image: NetworkImage(character.image)),
+                ),
+                Text(character.name,
                     style: const TextStyle(
                         fontSize: 16, overflow: TextOverflow.ellipsis))
               ],

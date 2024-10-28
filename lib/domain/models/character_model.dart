@@ -38,29 +38,29 @@ class InfoModel {
 }
 
 class CharacterModel {
-  int? id;
-  String? name;
+  int id;
+  String name;
   String? status;
   String? species;
   String? type;
   String? gender;
   LocationModel? origin;
   LocationModel? location;
-  String? image;
+  String image;
   List<String>? episode;
   String? url;
   DateTime? created;
 
   CharacterModel({
-    this.id,
-    this.name,
+    this.id = 0,
+    this.name = "",
     this.status,
     this.species,
     this.type,
     this.gender,
     this.origin,
     this.location,
-    this.image,
+    this.image = "",
     this.episode,
     this.url,
     this.created,
@@ -68,8 +68,8 @@ class CharacterModel {
 
   factory CharacterModel.fromEntity(CharacterEntityResponse entity) =>
       CharacterModel(
-        id: entity.id,
-        name: entity.name,
+        id: entity.id ?? 0,
+        name: entity.name ?? "No name",
         status: entity.status,
         species: entity.species,
         type: entity.type,
@@ -80,7 +80,7 @@ class CharacterModel {
         location: entity.location == null
             ? null
             : LocationModel.fromEntity(entity.location!),
-        image: entity.image,
+        image: entity.image ?? "No image",
         episode: entity.episode == null
             ? []
             : List<String>.from(entity.episode!.map((x) => x)),
