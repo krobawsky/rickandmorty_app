@@ -1,16 +1,13 @@
-# rickandmorty_app
+# Rick And Morty App
 
-A new Flutter project.
+List characters from universe Rick And Morty.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. Install dependencies from pubspec.yaml
+2. Select device to use.
+3. Run main file
 
-A few resources to get you started if this is your first Flutter project:
+## Architecture
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This app are build with layers Data, Domain, UI. 
