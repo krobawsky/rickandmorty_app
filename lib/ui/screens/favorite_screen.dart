@@ -49,22 +49,32 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       );
 }
 
-class FavoriteList extends StatelessWidget {
+class FavoriteList extends StatefulWidget {
   const FavoriteList({super.key, required this.favorites, required this.cubit});
 
   final List<FavoriteModel> favorites;
   final FavoriteCubit cubit;
+
+  @override
+  State<FavoriteList> createState() => _FavoriteListState();
+}
+
+class _FavoriteListState extends State<FavoriteList> {
   // Notice the variable type
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: favorites.length,
+        itemCount: widget.favorites.length,
         itemBuilder: (context, index) {
-          final character = favorites[index];
+          final character = widget.favorites[index];
           return Dismissible(
               key: Key(character.id.toString()),
               onDismissed: (direction) {
-                cubit.deleteFavorite(character.id);
+                widget.cubit.deleteFavorite(character.id);
+                setState(() {
+                  widget.favorites.removeAt(index);
+                });
+
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text('${character.name} deleted from favorites')));
               },
